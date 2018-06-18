@@ -1,5 +1,6 @@
 const parent = document.querySelector('#parent');
 
+// sets up 16 x 16 card grid
 function makeGrid(){
   for (let i = 0; i < 4; i++){
     const row = document.createElement('div');
