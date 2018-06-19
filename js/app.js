@@ -3,6 +3,8 @@ let card1 = null;
 let card2 = null;
 const movesCounter = document.querySelector('#movesCounter')
 let moveNum = null;
+//winNum will be used to determine if the user won the game
+let winNum = null;
 // set up an array with values which will be assigned to cards to determine what the graphic will be and what card will pair with it
 let cardValue = [];
 for (let i=1; i<=8; i++){
@@ -69,10 +71,15 @@ function check(event){
   if (card2){
     card1 = event.target;
     if (card1.getAttribute('value') === card2.getAttribute('value')){
+      winNum++;
       // yellow is supposed to indicate a match
       card1.style.backgroundColor = 'yellow';
       card2.style.backgroundColor = 'yellow';
       reset();
+      if(winNum === 8){
+        window.location.href = "win.html";
+        // I would like to add some code that makes the transition smoother. It's very abrupt and jarring. Maybe an animation.
+      }
     }
     else{
       // setting the background color to white is supposed to simulte turning the card around again
