@@ -7,7 +7,10 @@ function makeGrid(){
     parent.appendChild(row)
     for (let j = 0; j < 4; j++){
       const column = document.createElement('div');
+      const rn = (i+1).toString();
+      const cn = (j+1).toString();
       column.setAttribute('class', 'cell');
+      column.setAttribute('id',rn + cn);
       row.appendChild(column)
     }
   }
