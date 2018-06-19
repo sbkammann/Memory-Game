@@ -91,3 +91,5 @@ function reset(){
 makeGrid();
 randomNum();
 addPara();
+
+parent.addEventListener('click', check);
