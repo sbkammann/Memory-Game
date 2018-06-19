@@ -41,6 +41,25 @@ function randomNum(){
   }
 }
 
+//this will be add graphic later
+function addPara() {
+  for (let i = 0; i < 4; i++){
+    for (let j = 0; j < 4; j++){
+      const rn = (i+1).toString();
+      const cn = (j+1).toString();
+      //selects card based on unique id
+      const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
+      const value = card.getAttribute('value');
+      const t = document.createTextNode(value);
+      const  para = document.createElement('p');
+      para.appendChild(t);
+      card.appendChild(para);
+    }
+  }
+}
+
+
 
 makeGrid();
 randomNum();
+addPara();
