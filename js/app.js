@@ -1,6 +1,8 @@
 const parent = document.querySelector('#parent');
 let card1 = null;
 let card2 = null;
+const movesCounter = document.querySelector('#movesCounter')
+let moveNum = null;
 // set up an array with values which will be assigned to cards to determine what the graphic will be and what card will pair with it
 let cardValue = [];
 for (let i=1; i<=8; i++){
@@ -61,6 +63,8 @@ function addPara() {
 
 // checks to see if the cards  you click are a match
 function check(event){
+  moveNum++;
+  movesCounter.textContent = moveNum.toString();
   event.target.style.backgroundColor = 'grey';
   if (card2){
     card1 = event.target;
