@@ -64,7 +64,7 @@ function check(event){
   event.target.style.backgroundColor = 'grey';
   if (card2){
     card1 = event.target;
-    if (card1 === card2){
+    if (card1.getAttribute('value') === card2.getAttribute('value')){
       // yellow is supposed to indicate a match
       card1.style.backgroundColor = 'yellow';
       card2.style.backgroundColor = 'yellow';
