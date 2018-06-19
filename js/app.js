@@ -16,11 +16,31 @@ function makeGrid(){
       const column = document.createElement('div');
       const rn = (i+1).toString();
       const cn = (j+1).toString();
+      column.setAttribute('id','r'+rn + 'c' + cn);
       column.setAttribute('class', 'cell');
-      column.setAttribute('id',rn + cn);
       row.appendChild(column)
     }
   }
 }
 
+//randomly assigns a value to a card
+function randomNum(){
+  for (let i = 0; i < 4; i++){
+    for (let j = 0; j < 4; j++){
+      const rn = (i+1).toString();
+      const cn = (j+1).toString();
+      //selects card based on unique id
+      const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
+      //generates random number
+      const rand = Math.floor((Math.random()*(cardValue.length-1)));
+      //assigns value to card
+      const cardAssign = card.setAttribute('value', cardValue[rand]);
+       //remove assigned value from array
+      cardValue.splice(rand,1);
+    }
+  }
+}
+
+
 makeGrid();
+randomNum();
