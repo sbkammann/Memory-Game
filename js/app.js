@@ -1,10 +1,11 @@
-const parent = document.querySelector('#parent');
+
 let card1 = null;
 let card2 = null;
-const movesCounter = document.querySelector('#movesCounter')
 let moveNum = null;
 //winNum will be used to determine if the user won the game
 let winNum = null;
+let starNum = null;
+let plural = '!';
 // set up an array with values which will be assigned to cards to determine what the graphic will be and what card will pair with it
 let cardValue = [];
 for (let i=1; i<=8; i++){
@@ -14,6 +15,9 @@ for (let i=1; i<=8; i++){
 
 //checks what html file is being used and uses only applicable code on that page
 if (document.URL.includes('index.html')){
+
+  const parent = document.querySelector('#parent');
+  const movesCounter = document.querySelector('#movesCounter')
 
   // sets up 16 x 16 card grid
   function makeGrid(){
@@ -80,6 +84,8 @@ if (document.URL.includes('index.html')){
         card2.style.backgroundColor = 'yellow';
         reset();
         if(winNum === 8){
+          //save moveNum for win.html
+          sessionStorage.setItem('moveNum', moveNum.toString());
           window.location.href = "win.html";
           // I would like to add some code that makes the transition smoother. It's very abrupt and jarring. Maybe an animation.
         }
@@ -102,6 +108,11 @@ if (document.URL.includes('index.html')){
     card2 = null;
   }
 
+  function cookie(name, value) {
+    document.cookie = name + "=" + value + ";";
+  }
+
+
   makeGrid();
   randomNum();
   addPara();
@@ -111,10 +122,13 @@ if (document.URL.includes('index.html')){
 
 // applies JS code of win.html
 else {
-
+  const para = document.querySelector('p');
   const button = document.querySelector('button');
+  const text1 = sessionStorage.getItem('moveNum');
+  let message = `With ${text1} Moves and ${starNum} Star${plural}`;
+  para.textContent = message;
   button.addEventListener('click', function load(){
+    sessionStorage.removeItem('moveNum');
     window.location.href = "index.html";
   })
-
 }
