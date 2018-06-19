@@ -92,6 +92,15 @@ function reset(){
   card2 = null;
 }
 
+
+
+
+
+
+
+
+
+
 makeGrid();
 randomNum();
 addPara();
