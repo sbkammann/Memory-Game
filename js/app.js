@@ -1,5 +1,6 @@
 const parent = document.querySelector('#parent');
-
+let card1 = null;
+let card2 = null;
 // set up an array with values which will be assigned to cards to determine what the graphic will be and what card will pair with it
 let cardValue = [];
 for (let i=1; i<=8; i++){
@@ -58,7 +59,34 @@ function addPara() {
   }
 }
 
+// checks to see if the cards  you click are a match
+function check(event){
+  event.target.style.backgroundColor = 'grey';
+  if (card2){
+    card1 = event.target;
+    if (card1 === card2){
+      // yellow is supposed to indicate a match
+      card1.style.backgroundColor = 'yellow';
+      card2.style.backgroundColor = 'yellow';
+      reset();
+    }
+    else{
+      // setting the background color to white is supposed to simulte turning the card around again
+      card1.style.backgroundColor = 'white';
+      card2.style.backgroundColor = 'white';
+      reset();
+    }
+  }
+  else {
+    return card2 = event.target;
+  }
+}
 
+// reset the card variables
+function reset(){
+  card1 = null;
+  card2 = null;
+}
 
 makeGrid();
 randomNum();
