@@ -1,7 +1,7 @@
 
 let card1 = null;
 let card2 = null;
-let moveNum = null;
+let moveNum = 0;
 //winNum will be used to determine if the user won the game
 let winNum = null;
 let starNum = null;
@@ -72,12 +72,12 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
-    moveNum++;
-    movesCounter.textContent = moveNum.toString();
+
     event.target.style.backgroundColor = 'grey';
     if (card2){
       card1 = event.target;
       if (card1.getAttribute('value') === card2.getAttribute('value')){
+        moveNum++;
         winNum++;
         // yellow is supposed to indicate a match
         card1.style.backgroundColor = 'yellow';
@@ -91,6 +91,7 @@ if (document.URL.includes('index.html')){
         }
       }
       else{
+        moveNum++;
         // setting the background color to white is supposed to simulte turning the card around again
         card1.style.backgroundColor = 'white';
         card2.style.backgroundColor = 'white';
@@ -100,6 +101,9 @@ if (document.URL.includes('index.html')){
     else {
       return card2 = event.target;
     }
+
+  movesCounter.textContent = moveNum.toString();
+  
   }
 
   // reset the card variables
