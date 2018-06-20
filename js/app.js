@@ -47,7 +47,7 @@ if (document.URL.includes('index.html')){
         //selects card based on unique id
         const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
         //generates random number
-        const rand = Math.floor((Math.random()*(cardValue.length-1)));
+        const rand = Math.floor((Math.random()*(cardValue.length)));
         //assigns value to card
         const cardAssign = card.setAttribute('value', cardValue[rand]);
          //remove assigned value from array
