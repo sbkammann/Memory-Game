@@ -28,12 +28,24 @@ if (document.URL.includes('index.html')){
       const row = document.createElement('div');
       parent.appendChild(row)
       for (let j = 0; j < 4; j++){
-        const column = document.createElement('div');
+        // needed for unique card class
         const rn = (i+1).toString();
         const cn = (j+1).toString();
-        column.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell');
-        // column.setAttribute('class', 'cell');
-        row.appendChild(column)
+        // div creation step
+        const container = document.createElement('div');
+        const flip = document.createElement('div');
+        const front = document.createElement('div');
+        const back = document.createElement('div');
+        // class set up step
+        container.setAttribute('class', 'container');
+        flip.setAttribute('class', 'flip');
+        front.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'front');
+        back.setAttribute('class', 'back'+' '+'cell');
+        //append step 
+        flip.appendChild(front)
+        flip.appendChild(back)
+        container.appendChild(flip)
+        row.appendChild(container)
       }
     }
   }
