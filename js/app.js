@@ -67,6 +67,7 @@ if (document.URL.includes('index.html')){
         const value = card.getAttribute('value');
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/' + imgPool[value-1]+'.png');
+        img.setAttribute('value', value);
         card.appendChild(img);
       }
     }
