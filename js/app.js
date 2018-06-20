@@ -31,8 +31,8 @@ if (document.URL.includes('index.html')){
         const column = document.createElement('div');
         const rn = (i+1).toString();
         const cn = (j+1).toString();
-        column.setAttribute('id','r'+rn + 'c' + cn);
-        column.setAttribute('class', 'cell');
+        column.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell');
+        // column.setAttribute('class', 'cell');
         row.appendChild(column)
       }
     }
@@ -44,8 +44,8 @@ if (document.URL.includes('index.html')){
       for (let j = 0; j < 4; j++){
         const rn = (i+1).toString();
         const cn = (j+1).toString();
-        //selects card based on unique id
-        const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
+        //selects card based on unique class
+        const card = document.querySelector('.' +'r'+ rn + 'c' + cn);
         //generates random number
         const rand = Math.floor((Math.random()*(cardValue.length)));
         //assigns value to card
@@ -62,12 +62,13 @@ if (document.URL.includes('index.html')){
       for (let j = 0; j < 4; j++){
         const rn = (i+1).toString();
         const cn = (j+1).toString();
-        //selects card based on unique id
-        const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
+        //selects card based on unique class
+        const card = document.querySelector('.' +'r'+ rn + 'c' + cn);
         const value = card.getAttribute('value');
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/' + imgPool[value-1]+'.png');
         img.setAttribute('value', value);
+        img.setAttribute('class', 'r'+ rn + 'c' + cn);
         card.appendChild(img);
       }
     }
@@ -79,13 +80,13 @@ if (document.URL.includes('index.html')){
     event.target.style.backgroundColor = 'grey';
     if (card2){
       card1 = event.target;
-      if (card1.getAttribute('value') === card2.getAttribute('value')){
+      if (card1.getAttribute('value') === card2.getAttribute('value') && card1.getAttribute('class').split(' ')[0] !== card2.getAttribute('class').split(' ')[0]){
         //maybe add a check to see if the card has already been matched. should not have cards count towards move if it has already been flipped
         moveNum++;
         winNum++;
         // yellow is supposed to indicate a match
-        card1.style.backgroundColor = 'yellow';
-        card2.style.backgroundColor = 'yellow';
+        card1.style.backgroundColor = 'red';
+        card2.style.backgroundColor = 'red';
         reset();
         if(winNum === 8){
           //save moveNum for win.html
