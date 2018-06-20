@@ -13,6 +13,8 @@ for (let i=1; i<=8; i++){
   cardValue[2*(i-1)]=[i];
   cardValue[2*i-1]=[i];
 }
+// img file names stored as a string
+const imgPool = ['004-snorlax', '005-venonat', '006-charmander', '007-bullbasaur', '008-eevee', '010-pikachu', '011-meowth'];
 
 //checks what html file is being used and uses only applicable code on that page
 if (document.URL.includes('index.html')){
@@ -63,6 +65,7 @@ if (document.URL.includes('index.html')){
         //selects card based on unique id
         const card = document.querySelector('#' +'r'+ rn + 'c' + cn);
         const value = card.getAttribute('value');
+        
         const t = document.createTextNode(value);
         const  para = document.createElement('p');
         para.appendChild(t);
@@ -78,6 +81,7 @@ if (document.URL.includes('index.html')){
     if (card2){
       card1 = event.target;
       if (card1.getAttribute('value') === card2.getAttribute('value')){
+        //maybe add a check to see if the card has already been matched. should not have cards count towards move if it has already been flipped
         moveNum++;
         winNum++;
         // yellow is supposed to indicate a match
