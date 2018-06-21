@@ -33,19 +33,27 @@ if (document.URL.includes('index.html')){
         const cn = (j+1).toString();
         // div creation step
         const container = document.createElement('div');
-        const flip = document.createElement('div');
+        const flipCard = document.createElement('div');
         const front = document.createElement('div');
         const back = document.createElement('div');
         // class set up step
-        container.setAttribute('class', 'container');
-        flip.setAttribute('class', 'flip');
+        container.setAttribute('class', 'container'); //was container
+        flipCard.setAttribute('class', 'flipCard');
         front.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'front');
         back.setAttribute('class', 'back'+' '+'cell');
-        //append step 
-        flip.appendChild(front)
-        flip.appendChild(back)
-        container.appendChild(flip)
+        //set position
+        container.style.top = (j * 128).toString() + 'px'; // need to add some kind of window size here
+        container.style.left = (i * 128).toString() + 'px';
+        //append step
+        flipCard.appendChild(front)
+        flipCard.appendChild(back)
+        container.appendChild(flipCard) //was container
         row.appendChild(container)
+
+
+        const  img = document.createElement('img');
+        img.setAttribute('src', 'img/001-insignia.png');
+        back.appendChild(img);
       }
     }
   }
@@ -88,7 +96,7 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
-
+    flipping(event);
     event.target.style.backgroundColor = 'grey';
     if (card2){
       card1 = event.target;
@@ -129,9 +137,6 @@ if (document.URL.includes('index.html')){
     card2 = null;
   }
 
-  function cookie(name, value) {
-    document.cookie = name + "=" + value + ";";
-  }
   // sets the star skill rating
   function star(){
     let t ='***';
@@ -149,6 +154,17 @@ if (document.URL.includes('index.html')){
      sessionStorage.setItem('starNum', starNum.toString());
      sessionStorage.setItem('plural', plural);
   }
+
+  function flipping(event){
+    // const flipCard = document.querySelector('.flipCard');
+    const flipCard = event.target.parentElement.parentElement;  //I don't want this to grab container
+    if (flipCard.getAttribute('style') !== 'transform: rotateY(0deg);' && flipCard.getAttribute('style') != null){
+      flipCard.style.transform = 'rotateY(0deg)';
+    }
+    else {
+      flipCard.style.transform = 'rotateY(180deg)';
+    }
+   }
 
   makeGrid();
   randomNum();

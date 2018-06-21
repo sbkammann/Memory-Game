@@ -1,9 +1,50 @@
 .cell {
   border: 1px solid black;
-  width: 200px;
-  height: 200px;
+  /* width: 200px;
+  height: 200px; */
 }
 
 #parent {
-	display:flex;
+	/* display:flex; */
+}
+
+
+.container {
+	perspective: 1000px;
+  position: absolute;
+  height: 128px;
+  width: 128px;
+  background-color: grey; /* edit */
+  z-index: -1;
+}
+/* .container, .front, .back {
+	width: 320px;
+	height: 480px;
+} */
+.flipCard {
+  height: 128px;
+  width: 128px;
+	transition: 0.8s;
+	transform-style: preserve-3d;
+  position: absolute;
+  z-index: 0;
+  background-color: yellow;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+}
+.front {
+	z-index: 2;
+	transform: rotateY(0deg);
+  position: absolute;
+  top: 0px;
+}
+.back {
+  height: 128px;
+  width: 128px;
+  z-index: 1;
+  position: relative;
+  background-color: black;
+	transform: rotateY(-180deg);
 }
