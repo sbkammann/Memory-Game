@@ -1,4 +1,3 @@
-
 let card1 = null;
 let card2 = null;
 let moveNum = 0;
@@ -39,21 +38,21 @@ if (document.URL.includes('index.html')){
         // class set up step
         container.setAttribute('class', 'container'); //was container
         flipCard.setAttribute('class', 'flipCard');
-        front.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'front');
-        back.setAttribute('class', 'back'+' '+'cell');
+        back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back'); // was front
+        front.setAttribute('class', 'front'+' '+'cell'); //back
         //set position
-        container.style.top = (j * 128).toString() + 'px'; // need to add some kind of window size here
-        container.style.left = (i * 128).toString() + 'px';
+        container.style.top = (j * 128 + 200).toString() + 'px'; // need to add some kind of window size here
+        container.style.left = (i * 128 + 200).toString() + 'px';
         //append step
         flipCard.appendChild(front)
         flipCard.appendChild(back)
         container.appendChild(flipCard) //was container
         row.appendChild(container)
 
-
+        //adds an image to the back
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/001-insignia.png');
-        back.appendChild(img);
+        front.appendChild(img);
       }
     }
   }
@@ -65,18 +64,22 @@ if (document.URL.includes('index.html')){
         const rn = (i+1).toString();
         const cn = (j+1).toString();
         //selects card based on unique class
-        const card = document.querySelector('.' +'r'+ rn + 'c' + cn);
+        const cardFront = document.querySelector('.' +'r'+ rn + 'c' + cn);
+        const cardBack = cardFront.previousElementSibling;
         //generates random number
         const rand = Math.floor((Math.random()*(cardValue.length)));
         //assigns value to card
-        const cardAssign = card.setAttribute('value', cardValue[rand]);
+        const value = cardValue[rand];
+        // const cardAssign =
+        cardFront.setAttribute('value', value);
+        cardBack.setAttribute('value', value);
          //remove assigned value from array
         cardValue.splice(rand,1);
       }
     }
   }
 
-  //this will be add graphic later
+  //this adds graphic later
   function addPara() {
     for (let i = 0; i < 4; i++){
       for (let j = 0; j < 4; j++){
@@ -87,8 +90,8 @@ if (document.URL.includes('index.html')){
         const value = card.getAttribute('value');
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/' + imgPool[value-1]+'.png');
-        img.setAttribute('value', value);
-        img.setAttribute('class', 'r'+ rn + 'c' + cn);
+        // img.setAttribute('value', value);
+        // img.setAttribute('class', 'r'+ rn + 'c' + cn);
         card.appendChild(img);
       }
     }
@@ -96,17 +99,20 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
-    flipping(event);
-    event.target.style.backgroundColor = 'grey';
-    if (card2){
-      card1 = event.target;
-      if (card1.getAttribute('value') === card2.getAttribute('value') && card1.getAttribute('class').split(' ')[0] !== card2.getAttribute('class').split(' ')[0]){
+
+
+    // event.target.style.backgroundColor = 'grey';
+    if (card1){
+      card2 = event.target;
+      flipping(card2);
+      if (card1.parentElement.getAttribute('value') === card2.parentElement.getAttribute('value')  && card2.parentElement.getAttribute('class').split(' ')[0] === 'front' && card1.parentElement.getAttribute('class').split(' ')[0] === 'front'){  //&& card1.getAttribute('class').split(' ')[0] !== card2.getAttribute('class').split(' ')[0]
         //maybe add a check to see if the card has already been matched. should not have cards count towards move if it has already been flipped
         moveNum++;
         winNum++;
         // yellow is supposed to indicate a match
         card1.style.backgroundColor = 'red';
         card2.style.backgroundColor = 'red';
+        console.log('match');
         reset();
         if(winNum === 8){
           //save moveNum for win.html
@@ -120,15 +126,21 @@ if (document.URL.includes('index.html')){
         // setting the background color to white is supposed to simulte turning the card around again
         card1.style.backgroundColor = 'white';
         card2.style.backgroundColor = 'white';
-        reset();
+        // setTimeout(flipping(event), 5000); // delay of 3 seconds
+        setTimeout(function(){ flipping(card2)}, 1000); //put card 2
+        setTimeout(function(){ flipping(card1)}, 1000);
+        setTimeout(function(){ reset()}, 1001);
+        // flipping(event);
       }
     }
     else {
-      return card2 = event.target;
+      card1 = event.target;  // there was a return here
+      flipping(card1);
+      return card1;
     }
 
   movesCounter.textContent = moveNum.toString();
-  star();
+  // star();
   }
 
   // reset the card variables
@@ -138,26 +150,25 @@ if (document.URL.includes('index.html')){
   }
 
   // sets the star skill rating
-  function star(){
-    let t ='***';
-    let starNum =3;
-    if (moveNum > 8 && moveNum < 16){
-      t ='**';
-      starNum =2;
-    }
-    if (moveNum >= 16){
-      t ='*';
-      plural ='!';
-      starNum =1;
-    }
-     starSpan.textContent = t;
-     sessionStorage.setItem('starNum', starNum.toString());
-     sessionStorage.setItem('plural', plural);
-  }
+  // function star(){
+  //   const star3 = document.getElementById('star3');
+  //   let starNum =3;
+  //   if (moveNum > 8 && moveNum < 16){
+  //     const rm = star3.firstElementChild
+  //     star3.removeChild(rm);
+  //     starNum =2;
+  //   }
+  //   if (moveNum >= 16){
+  //     const rv = star3.firstElementChild
+  //     star3.removeChild(rv);
+  //     starNum =1;
+  //   }
+  //    sessionStorage.setItem('starNum', starNum.toString());
+  // }
 
-  function flipping(event){
+  function flipping(card){ //was event
     // const flipCard = document.querySelector('.flipCard');
-    const flipCard = event.target.parentElement.parentElement;  //I don't want this to grab container
+    const flipCard = card.parentElement.parentElement;  //I don't want this to grab container had event.target
     if (flipCard.getAttribute('style') !== 'transform: rotateY(0deg);' && flipCard.getAttribute('style') != null){
       flipCard.style.transform = 'rotateY(0deg)';
     }
@@ -175,15 +186,33 @@ if (document.URL.includes('index.html')){
 
 // applies JS code of win.html
 else {
-  const para = document.querySelector('p');
+  const para = document.getElementById('one');
   const button = document.querySelector('button');
   const text1 = sessionStorage.getItem('moveNum');
   const text2 = sessionStorage.getItem('starNum');
   const text3 = sessionStorage.getItem('plural');
-  let message = `With ${text1} Moves and ${text2} Star${text3}`;
+  let message = `With ${text1} Moves and `;
   para.textContent = message;
+  star(text2);
   button.addEventListener('click', function load(){
-    sessionStorage.removeItem('moveNum', 'starNum', 'plural');
+    sessionStorage.removeItem('moveNum', 'starNum');
     window.location.href = "index.html";
   })
+
+  function star(s){
+    const two = document.getElementById('two');
+    const three = document.getElementById('three');
+    const spanBox = document.querySelector('#spanBox');
+    const  img = document.createElement('img');
+    img.setAttribute('src', 'img/013-star.png');
+    img.setAttribute('id', 'star');
+   for (let i = 0; i < s; i++){
+     const  img = document.createElement('img');
+     img.setAttribute('src', 'img/013-star.png');
+     img.setAttribute('class', 'star');
+     two.appendChild(img);
+   }
+   // let message2 = `Star${text3}`;
+   //  three.textContent = message2;
+  }
 }
