@@ -12,6 +12,9 @@ for (let i=1; i<=8; i++){
   cardValue[2*(i-1)]=[i];
   cardValue[2*i-1]=[i];
 }
+// allows users to click next card pair before previous card pair has flipped
+let cardQueue = [];
+let cQcounter = 0;
 // img file names stored as a string
 const imgPool = ['004-snorlax', '005-venonat', '006-charmander', '007-bullbasaur', '008-eevee', '009-squirtle', '010-pikachu', '011-meowth'];
 
@@ -41,8 +44,9 @@ if (document.URL.includes('index.html')){
         back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back'); // was front
         front.setAttribute('class', 'front'+' '+'cell'); //back
         //set position
-        container.style.top = (j * 128 + 200).toString() + 'px'; // need to add some kind of window size here
-        container.style.left = (i * 128 + 200).toString() + 'px';
+        const margin = (window.innerWidth - 512)/2;
+        container.style.top = (j * 128 + 200).toString() + 'px';
+        container.style.left = (i * 128 + margin).toString() + 'px';
         //append step
         flipCard.appendChild(front)
         flipCard.appendChild(back)
@@ -100,20 +104,24 @@ if (document.URL.includes('index.html')){
   // checks to see if the cards  you click are a match
   function check(event){
 
-
     // event.target.style.backgroundColor = 'grey';
-    if (card1){
+    if (cardQueue.length % 2 === 1){
       card2 = event.target;
+      cardQueue.push(card2);
+      cQcounter++;
       flipping(card2);
-      if (card1.parentElement.getAttribute('value') === card2.parentElement.getAttribute('value')  && card2.parentElement.getAttribute('class').split(' ')[0] === 'front' && card1.parentElement.getAttribute('class').split(' ')[0] === 'front'){  //&& card1.getAttribute('class').split(' ')[0] !== card2.getAttribute('class').split(' ')[0]
+      if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){
+      //  if (card1.parentElement.getAttribute('value') === card2.parentElement.getAttribute('value')  && card2.parentElement.getAttribute('class').split(' ')[0] === 'front' && card1.parentElement.getAttribute('class').split(' ')[0] === 'front'){  //&& card1.getAttribute('class').split(' ')[0] !== card2.getAttribute('class').split(' ')[0]
         //maybe add a check to see if the card has already been matched. should not have cards count towards move if it has already been flipped
         moveNum++;
         winNum++;
         // yellow is supposed to indicate a match
-        card1.style.backgroundColor = 'red';
-        card2.style.backgroundColor = 'red';
+        // card1.style.backgroundColor = 'red';
+        // card2.style.backgroundColor = 'red';
         console.log('match');
-        reset();
+        cardQueue.splice(cQcounter-2, 2);
+        cQcounter = cQcounter- 2;
+        //reset(); // remove from card queue isntead of reset
         if(winNum === 8){
           //save moveNum for win.html
           sessionStorage.setItem('moveNum', moveNum.toString());
@@ -126,21 +134,31 @@ if (document.URL.includes('index.html')){
         // setting the background color to white is supposed to simulte turning the card around again
         card1.style.backgroundColor = 'white';
         card2.style.backgroundColor = 'white';
+
         // setTimeout(flipping(event), 5000); // delay of 3 seconds
-        setTimeout(function(){ flipping(card2)}, 1000); //put card 2
-        setTimeout(function(){ flipping(card1)}, 1000);
-        setTimeout(function(){ reset()}, 1001);
+        setTimeout(function(){ flipping(cardQueue[cQcounter-2])}, 1000); //put card 2
+        setTimeout(function(){ flipping(cardQueue[cQcounter-1])}, 1000);
+        setTimeout(function(){ cardQueue.splice(cQcounter-2, 2)}, 1001);
+        setTimeout(function(){ cQcounter = cQcounter- 2;}, 1001);
+
+
+        // setTimeout(function(){ flipping(card2)}, 1000); //original
+        // setTimeout(function(){ flipping(card1)}, 1000);
+        // setTimeout(function(){ reset()}, 1001);
         // flipping(event);
       }
     }
     else {
       card1 = event.target;  // there was a return here
+      cardQueue.push(card1);
+      cQcounter++;
       flipping(card1);
-      return card1;
+      return card1; // return cardQueue?
+
     }
 
   movesCounter.textContent = moveNum.toString();
-  // star();
+  star();
   }
 
   // reset the card variables
@@ -149,22 +167,22 @@ if (document.URL.includes('index.html')){
     card2 = null;
   }
 
-  // sets the star skill rating
-  // function star(){
-  //   const star3 = document.getElementById('star3');
-  //   let starNum =3;
-  //   if (moveNum > 8 && moveNum < 16){
-  //     const rm = star3.firstElementChild
-  //     star3.removeChild(rm);
-  //     starNum =2;
-  //   }
-  //   if (moveNum >= 16){
-  //     const rv = star3.firstElementChild
-  //     star3.removeChild(rv);
-  //     starNum =1;
-  //   }
-  //    sessionStorage.setItem('starNum', starNum.toString());
-  // }
+  //sets the star skill rating
+  function star(){
+    const star3 = document.getElementById('star3');
+    let starNum =3;
+    if (moveNum === 9){
+      const rm = star3.firstElementChild
+      star3.removeChild(rm);
+      starNum =2;
+    }
+    if (moveNum === 17){
+      const rv = star3.firstElementChild
+      star3.removeChild(rv);
+      starNum =1;
+    }
+     sessionStorage.setItem('starNum', starNum.toString());
+  }
 
   function flipping(card){ //was event
     // const flipCard = document.querySelector('.flipCard');
@@ -193,13 +211,13 @@ else {
   const text3 = sessionStorage.getItem('plural');
   let message = `With ${text1} Moves and `;
   para.textContent = message;
-  star(text2);
+  stars(text2);
   button.addEventListener('click', function load(){
     sessionStorage.removeItem('moveNum', 'starNum');
     window.location.href = "index.html";
   })
 
-  function star(s){
+  function stars(s){
     const two = document.getElementById('two');
     const three = document.getElementById('three');
     const spanBox = document.querySelector('#spanBox');

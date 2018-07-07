@@ -5,7 +5,9 @@
 }
 
 #parent {
-	/* display:flex; */
+	margin-left: auto;
+  margin-right: auto;
+  width: 512px;
 }
 
 
@@ -52,18 +54,18 @@
   margin-right:200px;
 }
 #box {
-  align-self: center;
+  text-align: center;
   width: 800px;
   margin-left: auto;
   margin-right:auto;
 }
 #imgBox {
   width:100px;
-
 }
-h1, p {
-  text-align: center;
-  font-family: 'Lemon', cursive;
+#spanBox {
+  width: 220px;
+  margin-left: auto;
+  margin-right: auto;
 }
 button {
   height: 40px;
@@ -82,10 +84,54 @@ button {
   display: inline-block;
   margin: 0;
 }
-#one{
+/* #one{
   margin-left: 325px;
-}
+} */
 span {
   font-size: 16px;
   font-family: helvetica;
+}
+header {
+  width: 100%;
+  display: flex;
+flex-direction: column;
+}
+#titleDiv {
+  /* display: block; */
+  /* text-align: center; */
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+  width: 100%;
+  position: relative;
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+h1 {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Lemon', cursive;
+}
+#starDiv {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+#starBox {
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+}
+
+footer {
+  position: absolute;
+  display: block;
+  top: 800px;
+  width: 100%;
+}
+#footerBox {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
