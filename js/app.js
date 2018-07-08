@@ -3,7 +3,7 @@ let card2 = null;
 let moveNum = 0;
 //winNum will be used to determine if the user won the game
 let winNum = null;
-let starNum = null;
+let starNum = 3;
 //this is for the text that tells the user how many starts they had when they won. If they only have one star this gets set to '!'
 let plural = 's!';
 // set up an array with values which will be assigned to cards to determine what the graphic will be and what card will pair with it
@@ -125,7 +125,7 @@ if (document.URL.includes('index.html')){
         if(winNum === 8){
           //save moveNum for win.html
           sessionStorage.setItem('moveNum', moveNum.toString());
-          window.location.href = "win.html";
+          setTimeout(function(){window.location.href = "win.html";}, 1000);
           // I would like to add some code that makes the transition smoother. It's very abrupt and jarring. Maybe an animation.
         }
       }
@@ -170,7 +170,6 @@ if (document.URL.includes('index.html')){
   //sets the star skill rating
   function star(){
     const star3 = document.getElementById('star3');
-    let starNum =3;
     if (moveNum === 9){
       const rm = star3.firstElementChild
       star3.removeChild(rm);
@@ -181,7 +180,7 @@ if (document.URL.includes('index.html')){
       star3.removeChild(rv);
       starNum =1;
     }
-     sessionStorage.setItem('starNum', starNum.toString());
+    sessionStorage.setItem('starNum', starNum.toString());
   }
 
   function flipping(card){ //was event
@@ -219,8 +218,8 @@ else {
 
   function stars(s){
     const two = document.getElementById('two');
-    const three = document.getElementById('three');
-    const spanBox = document.querySelector('#spanBox');
+    // const three = document.getElementById('three');
+    // const spanBox = document.querySelector('#spanBox');
     const  img = document.createElement('img');
     img.setAttribute('src', 'img/013-star.png');
     img.setAttribute('id', 'star');
