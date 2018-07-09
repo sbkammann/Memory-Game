@@ -54,12 +54,16 @@ if (document.URL.includes('index.html')){
         //set position
 
         let picWidth = 128;
+        let spaceTop =12;
+        let spaceLeft =8;
         if (window.innerWidth < 530){
           picWidth = 65;
+          spaceTop =0;
+          spaceLeft =0;
         }
         const margin = (window.innerWidth - (picWidth*4))/2;
-        container.style.top = (j * (picWidth+12) + 220).toString() + 'px';
-        container.style.left = (i * (picWidth+8) + margin).toString() + 'px';
+        container.style.top = (j * (picWidth+spaceTop) + 220).toString() + 'px';
+        container.style.left = (i * (picWidth+spaceLeft) + margin).toString() + 'px';
         //append step
         flipCard.appendChild(front)
         flipCard.appendChild(back)
