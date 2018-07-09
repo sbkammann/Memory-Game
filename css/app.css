@@ -63,7 +63,7 @@
   width:100px;
 }
 #spanBox {
-  width: 220px;
+  width: 360px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -132,6 +132,11 @@ footer {
 }
 #footerBox {
   width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#timeDisplay{
+  padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
 }

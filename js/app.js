@@ -17,6 +17,14 @@ let cardQueue = [];
 let cQcounter = 0;
 // img file names stored as a string
 const imgPool = ['004-snorlax', '005-venonat', '006-charmander', '007-bullbasaur', '008-eevee', '009-squirtle', '010-pikachu', '011-meowth'];
+//timer variables
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
+let hourText = '00';
+let minText = '00';
+let secText = '00';
+const timeArray = [[hours, hourText], [minutes, minText], [seconds, secText]];
 
 //checks what html file is being used and uses only applicable code on that page
 if (document.URL.includes('index.html')){
@@ -41,7 +49,7 @@ if (document.URL.includes('index.html')){
         // class set up step
         container.setAttribute('class', 'container'); //was container
         flipCard.setAttribute('class', 'flipCard');
-        back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back'); // was front
+        back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back');
         front.setAttribute('class', 'front'+' '+'cell'); //back
         //set position
         const margin = (window.innerWidth - 512)/2;
@@ -194,21 +202,66 @@ if (document.URL.includes('index.html')){
     }
    }
 
+   // timer
+
+
+   setInterval(function() {
+     timeArray[2][0]++;
+     if (timeArray[2][0] === 60){
+       timeArray[1][0]++;
+       timeArray[2][0] = 0;
+     }
+     if (timeArray[1][0] === 60){
+       timeArray[0][0]++;
+       timeArray[1][0] =0;
+     }
+     for (let i = 0; i < timeArray.length; i++){
+       if (timeArray[i][0].toString().length < 2){
+         timeArray[i][1] = '0' + timeArray[i][0].toString();
+       }
+       else {
+         timeArray[i][1] = timeArray[i][0].toString();
+       }
+      }
+     let time = `${timeArray[0][1]}:${timeArray[1][1]}:${timeArray[2][1]}`;
+     document.getElementById("timeDisplay").innerHTML = time;
+     sessionStorage.setItem('time', time);
+   }, 1000);
+
+
+   //dynamically change position of cards
+   // function positionGrid(){
+   //   for (let i = 0; i < 4; i++){
+   //     for (let j = 0; j < 4; j++){
+   //
+   //       const rn = (i+1).toString();
+   //       const cn = (j+1).toString();
+   //       const back = document.querySelector('.' +'r'+ rn + 'c' + cn);
+   //       const container = back.parentElement.parentElement;
+   //       const margin = (window.innerWidth - 512)/2;
+   //       // container.style.top = (j * 128 + 200).toString() + 'px';
+   //       container.style.left = (i * 128 + margin).toString() + 'px';
+   //    }
+   //  }
+   // }
+
   makeGrid();
   randomNum();
   addPara();
 
   parent.addEventListener('click', check);
+  // window.addEventListener('sizemodechange', positionGrid);
 }
 
 // applies JS code of win.html
 else {
   const para = document.getElementById('one');
   const button = document.querySelector('button');
+  const text = sessionStorage.getItem('time');
   const text1 = sessionStorage.getItem('moveNum');
   const text2 = sessionStorage.getItem('starNum');
   const text3 = sessionStorage.getItem('plural');
-  let message = `With ${text1} Moves and `;
+  let message = `It took you ${text} with ${text1} moves and `;
   para.textContent = message;
   stars(text2);
   button.addEventListener('click', function load(){
