@@ -1,7 +1,6 @@
 .cell {
   border: 1px solid black;
-  /* width: 200px;
-  height: 200px; */
+
 }
 
 #parent {
@@ -48,19 +47,19 @@
 	transform: rotateY(-180deg);
 }
 #crown {
-  height: 400px;
-  width: 400px;
-  margin-left: 200px;
-  margin-right:200px;
+  height: 50%; /* 400 */
+  width: 50%; /* 400 */
+  margin-left: auto; /* 200 */
+  margin-right: auto; /* 200 */
 }
 #box {
   text-align: center;
-  width: 800px;
+  width: 67%; /*800px */
   margin-left: auto;
   margin-right:auto;
 }
 #imgBox {
-  width:100px;
+  width: 100%; /* 100px */
 }
 #spanBox {
   width: 360px;
@@ -127,11 +126,11 @@ h1 {
 footer {
   position: absolute;
   display: block;
-  top: 800px;
+  top: 820px;
   width: 100%;
 }
 #footerBox {
-  width: 50%;
+  width: 55%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -139,4 +138,31 @@ footer {
   padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
+}
+#restart{
+  width: 120px;
+}
+
+@media screen and (max-width: 530px) {
+  .cell, .pic, .container, .back, .flipCard {
+    width: 65px;
+    height: 65px;
+  }
+  #box {
+    width: 270px;
+  }
+  button {
+    border: 2px solid black;
+    font-size: 12px;
+  }
+  #spanBox {
+    width: 200px;
+  }
+  footer {
+    top: 550px;
+  }
+  #footerBox {
+    margin-left: 0;
+  }
+
 }

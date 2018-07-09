@@ -52,9 +52,14 @@ if (document.URL.includes('index.html')){
         back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back');
         front.setAttribute('class', 'front'+' '+'cell'); //back
         //set position
-        const margin = (window.innerWidth - 512)/2;
-        container.style.top = (j * 128 + 200).toString() + 'px';
-        container.style.left = (i * 128 + margin).toString() + 'px';
+
+        let picWidth = 128;
+        if (window.innerWidth < 530){
+          picWidth = 65;
+        }
+        const margin = (window.innerWidth - (picWidth*4))/2;
+        container.style.top = (j * (picWidth+12) + 220).toString() + 'px';
+        container.style.left = (i * (picWidth+8) + margin).toString() + 'px';
         //append step
         flipCard.appendChild(front)
         flipCard.appendChild(back)
@@ -64,6 +69,7 @@ if (document.URL.includes('index.html')){
         //adds an image to the back
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/001-insignia.png');
+        img.setAttribute('class', 'pic');
         front.appendChild(img);
       }
     }
@@ -102,6 +108,7 @@ if (document.URL.includes('index.html')){
         const value = card.getAttribute('value');
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/' + imgPool[value-1]+'.png');
+        img.setAttribute('class', 'pic');
         // img.setAttribute('value', value);
         // img.setAttribute('class', 'r'+ rn + 'c' + cn);
         card.appendChild(img);
