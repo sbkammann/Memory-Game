@@ -1,12 +1,12 @@
 .cell {
   border: 1px solid black;
 }
+
 #parent {
 	margin-left: auto;
   margin-right: auto;
   width: 512px;
 }
-
 
 .container {
 	perspective: 1000px;
@@ -15,10 +15,7 @@
   width: 128px;
   z-index: -1;
 }
-/* .container, .front, .back {
-	width: 320px;
-	height: 480px;
-} */
+
 .flipCard {
   height: 128px;
   width: 128px;
@@ -28,15 +25,18 @@
   z-index: 0;
 }
 
-.front, .back {
+.front,
+.back {
 	backface-visibility: hidden;
 }
+
 .front {
 	z-index: 2;
 	transform: rotateY(0deg);
   position: absolute;
-  top: 0px;
+  top: 0;
 }
+
 .back {
   height: 128px;
   width: 128px;
@@ -44,26 +44,31 @@
   position: relative;
 	transform: rotateY(-180deg);
 }
+
 #crown {
-  height: 50%; /* 400 */
-  width: 50%; /* 400 */
-  margin-left: auto; /* 200 */
-  margin-right: auto; /* 200 */
+  height: 50%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 #box {
   text-align: center;
-  width: 67%; /*800px */
+  width: 67%;
   margin-left: auto;
-  margin-right:auto;
+  margin-right: auto;
 }
+
 #imgBox {
-  width: 100%; /* 100px */
+  width: 100%;
 }
+
 #spanBox {
   width: 360px;
   margin-left: auto;
   margin-right: auto;
 }
+
 button {
   height: 40px;
   width: 30%;
@@ -75,29 +80,26 @@ button {
   font-size: 16px;
   font-weight: bold;
 }
+
 .star {
   height: 20px;
   width: 20px;
   display: inline-block;
   margin: 0;
 }
-/* #one{
-  margin-left: 325px;
-} */
+
 span {
   font-size: 16px;
   font-family: helvetica;
 }
+
 header {
   width: 100%;
   display: flex;
-flex-direction: column;
+  flex-direction: column;
 }
+
 #titleDiv {
-  /* display: block; */
-  /* text-align: center; */
-  /* margin-left: auto;
-  margin-right: auto; */
   text-align: center;
   width: 100%;
   position: relative;
@@ -105,16 +107,19 @@ flex-direction: column;
   margin-left: auto;
   margin-right: auto;
 }
+
 h1 {
   margin-left: auto;
   margin-right: auto;
-  font-family: 'Lemon', cursive;
+  font-family: "Lemon", cursive;
 }
+
 #starDiv {
   display: block;
   position: relative;
   width: 100%;
 }
+
 #starBox {
   margin-left: auto;
   margin-right: auto;
@@ -127,38 +132,51 @@ footer {
   top: 820px;
   width: 100%;
 }
+
 #footerBox {
   width: 55%;
   margin-left: auto;
   margin-right: auto;
 }
-#timeDisplay{
+
+#timeDisplay {
   padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
 }
-#restart{
+
+#restart {
   width: 120px;
 }
 
 @media screen and (max-width: 530px) {
-  .cell, .pic, .container, .back, .flipCard {
+
+  .cell,
+  .pic,
+  .container,
+  .back,
+  .flipCard {
     width: 65px;
     height: 65px;
   }
+
   #box {
     width: 270px;
   }
+
   button {
     border: 2px solid black;
     font-size: 12px;
   }
+
   #spanBox {
     width: 200px;
   }
+
   footer {
     top: 550px;
   }
+
   #footerBox {
     margin-left: 0;
   }
