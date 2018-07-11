@@ -124,10 +124,6 @@ if (document.URL.includes('index.html')){
         if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){
           moveNum++;
           winNum++;
-          console.log(cardQueue);
-          console.log('match');
-          console.log(cardQueue[cQcounter-2].getAttribute('class').split(" ")[1]);
-          console.log(cardQueue[cQcounter-1].getAttribute('class').split(" ")[1]);
           cardQueue.splice(cQcounter-2, 2);
           cQcounter = cQcounter- 2;
           if(winNum === 8){
