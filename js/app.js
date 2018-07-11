@@ -45,7 +45,7 @@ if (document.URL.includes('index.html')){
         // class set up step
         container.setAttribute('class', 'container');
         flipCard.setAttribute('class', 'flipCard');
-        back.setAttribute('class', 'r'+rn + 'c' + cn +' '+'cell'+' '+'back');
+        back.setAttribute('class', 'r'+ rn + 'c' + cn + ' ' + 'cell' + ' ' + 'back');
         front.setAttribute('class', 'front'+' '+'cell');
         //set position
         let picWidth = 128;
@@ -67,7 +67,7 @@ if (document.URL.includes('index.html')){
         //adds an image to the back
         const  img = document.createElement('img');
         img.setAttribute('src', 'img/001-insignia.png');
-        img.setAttribute('class', 'pic');
+        img.setAttribute('class', 'pic' + ' ' + i+j);
         front.appendChild(img);
       }
     }
@@ -87,7 +87,9 @@ if (document.URL.includes('index.html')){
         //assigns value to card
         const value = cardValue[rand];
         cardFront.setAttribute('value', value);
+        cardFront.setAttribute('name', 'front');
         cardBack.setAttribute('value', value);
+        cardBack.setAttribute('name', 'back');
         //remove assigned value from array
         cardValue.splice(rand,1);
       }
@@ -113,40 +115,45 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
-    if (cardQueue.length % 2 === 1){
-      card2 = event.target;
-      cardQueue.push(card2);
-      cQcounter++;
-      flipping(card2);
-      if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){
-        moveNum++;
-        winNum++;
-        console.log('match');
-        cardQueue.splice(cQcounter-2, 2);
-        cQcounter = cQcounter- 2;
-        if(winNum === 8){
-          //save moveNum for win.html
-          sessionStorage.setItem('moveNum', moveNum.toString());
-          setTimeout(function(){window.location.href = "win.html";}, 1000);
+    if (event.target.parentElement.getAttribute('name') === 'back'){
+      if (cardQueue.length % 2 === 1){
+        card2 = event.target;
+        cardQueue.push(card2);
+        cQcounter++;
+        flipping(card2);
+        if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){ 
+          moveNum++;
+          winNum++;
+          console.log(cardQueue);
+          console.log('match');
+          console.log(cardQueue[cQcounter-2].getAttribute('class').split(" ")[1]);
+          console.log(cardQueue[cQcounter-1].getAttribute('class').split(" ")[1]);
+          cardQueue.splice(cQcounter-2, 2);
+          cQcounter = cQcounter- 2;
+          if(winNum === 8){
+            //save moveNum for win.html
+            sessionStorage.setItem('moveNum', moveNum.toString());
+            setTimeout(function(){window.location.href = "win.html";}, 1000);
+          }
+        }
+        else{
+          moveNum++;
+          setTimeout(function(){ flipping(cardQueue[cQcounter-2])}, 1000);
+          setTimeout(function(){ flipping(cardQueue[cQcounter-1])}, 1000);
+          setTimeout(function(){ cardQueue.splice(cQcounter-2, 2)}, 1001);
+          setTimeout(function(){ cQcounter = cQcounter- 2;}, 1001);
         }
       }
-      else{
-        moveNum++;
-        setTimeout(function(){ flipping(cardQueue[cQcounter-2])}, 1000);
-        setTimeout(function(){ flipping(cardQueue[cQcounter-1])}, 1000);
-        setTimeout(function(){ cardQueue.splice(cQcounter-2, 2)}, 1001);
-        setTimeout(function(){ cQcounter = cQcounter- 2;}, 1001);
+      else {
+        card1 = event.target;
+        cardQueue.push(card1);
+        cQcounter++;
+        flipping(card1);
+        return card1;
       }
+    movesCounter.textContent = moveNum.toString();
+    star();
     }
-    else {
-      card1 = event.target;
-      cardQueue.push(card1);
-      cQcounter++;
-      flipping(card1);
-      return card1;
-    }
-  movesCounter.textContent = moveNum.toString();
-  star();
   }
 
   //sets the star skill rating
