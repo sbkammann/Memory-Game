@@ -53,8 +53,8 @@ if (document.URL.includes('index.html')){
         let spaceLeft =8;
         if (window.innerWidth < 530){
           picWidth = 65;
-          spaceTop =0;
-          spaceLeft =0;
+          spaceTop = 0;
+          spaceLeft = 0;
         }
         const margin = (window.innerWidth - (picWidth*4))/2;
         container.style.top = (j * (picWidth+spaceTop) + 220).toString() + 'px';
@@ -121,7 +121,7 @@ if (document.URL.includes('index.html')){
         cardQueue.push(card2);
         cQcounter++;
         flipping(card2);
-        if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){ 
+        if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){
           moveNum++;
           winNum++;
           console.log(cardQueue);
@@ -213,6 +213,7 @@ if (document.URL.includes('index.html')){
   parent.addEventListener('click', check);
   const restart = document.getElementById('restart');
   restart.addEventListener('click', function(){location.reload();});
+  window.addEventListener('resize', function(){location.reload();});
 }
 
 // applies JS code of win.html
