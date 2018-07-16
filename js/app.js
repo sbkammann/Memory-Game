@@ -26,6 +26,9 @@ const timeArray = [[hours, hourText], [minutes, minText], [seconds, secText]];
 // variable prevents user from flipping more than two cards at a time
 let ready = true;
 
+//triggers timer
+let timerStart = false;
+
 //checks what html file is being used and uses only applicable code on that page
 if (document.URL.includes('index.html')){
   const parent = document.querySelector('#parent');
@@ -118,6 +121,7 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
+    timerStart = true;
     if (event.target.parentElement.getAttribute('name') === 'back' && ready){
       if (cardQueue.length % 2 === 1){
         card2 = event.target;
@@ -186,6 +190,7 @@ if (document.URL.includes('index.html')){
 
    // timer
    setInterval(function() {
+     if (timerStart){
      timeArray[2][0]++;
      if (timeArray[2][0] === 60){
        timeArray[1][0]++;
@@ -206,6 +211,7 @@ if (document.URL.includes('index.html')){
      let time = `${timeArray[0][1]}:${timeArray[1][1]}:${timeArray[2][1]}`;
      document.getElementById("timeDisplay").innerHTML = time;
      sessionStorage.setItem('time', time);
+   }
    }, 1000);
 
   makeGrid();
