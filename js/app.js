@@ -23,6 +23,9 @@ let minText = '00';
 let secText = '00';
 const timeArray = [[hours, hourText], [minutes, minText], [seconds, secText]];
 
+// variable prevents user from flipping more than two cards at a time
+let ready = true;
+
 //checks what html file is being used and uses only applicable code on that page
 if (document.URL.includes('index.html')){
   const parent = document.querySelector('#parent');
@@ -115,17 +118,19 @@ if (document.URL.includes('index.html')){
 
   // checks to see if the cards  you click are a match
   function check(event){
-    if (event.target.parentElement.getAttribute('name') === 'back'){
+    if (event.target.parentElement.getAttribute('name') === 'back' && ready){
       if (cardQueue.length % 2 === 1){
         card2 = event.target;
         cardQueue.push(card2);
         cQcounter++;
         flipping(card2);
+        ready = false;
         if (cardQueue[cQcounter-2].parentElement.getAttribute('value') === cardQueue[cQcounter-1].parentElement.getAttribute('value')){
           moveNum++;
           winNum++;
           cardQueue.splice(cQcounter-2, 2);
           cQcounter = cQcounter- 2;
+          ready = true;
           if(winNum === 8){
             //save moveNum for win.html
             sessionStorage.setItem('moveNum', moveNum.toString());
@@ -138,6 +143,7 @@ if (document.URL.includes('index.html')){
           setTimeout(function(){ flipping(cardQueue[cQcounter-1])}, 1000);
           setTimeout(function(){ cardQueue.splice(cQcounter-2, 2)}, 1001);
           setTimeout(function(){ cQcounter = cQcounter- 2;}, 1001);
+          setTimeout(function(){ ready = true}, 1001);
         }
       }
       else {
